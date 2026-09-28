@@ -1,0 +1,36 @@
+diff --git a/slugify/__main__.py b/slugify/__main__.py
+index fde2a86..8d8cb52 100644
+--- a/slugify/__main__.py
++++ b/slugify/__main__.py
+@@ -1,12 +1,22 @@
+ from __future__ import annotations
+
+ import argparse
++import re
+ import sys
+ from typing import Any
+
+ from .slugify import slugify, DEFAULT_SEPARATOR
+
+
++def regex_argument(value: str) -> str:
++    """Validate syntax at the CLI boundary while preserving the API value."""
++    try:
++        re.compile(value)
++    except re.error as error:
++        raise argparse.ArgumentTypeError(f"invalid regular expression: {error}") from error
++    return value
++
++
+ def parse_args(argv: list[str]) -> argparse.Namespace:
+     parser = argparse.ArgumentParser(description="Slug string")
+
+@@ -32,7 +42,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
+                         help="Separator between words. By default " + DEFAULT_SEPARATOR)
+     parser.add_argument("--stopwords", nargs='+',
+                         help="Words to discount")
+-    parser.add_argument("--regex-pattern",
++    parser.add_argument("--regex-pattern", type=regex_argument,
+                         help="Python regex pattern for disallowed characters")
+     parser.add_argument("--no-lowercase", action='store_false', dest='lowercase', default=True,
+                         help="Activate case sensitivity")

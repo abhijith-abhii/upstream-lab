@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/un33k/python-slugify.git",
+  "commit": "866401ea6b346d7575cf941bc73ad32a362e34aa",
+  "license": "MIT",
+  "scope": "CLI validation of invalid regular expressions",
+  "submission": "Not submitted; review-ready patch only"
+}
