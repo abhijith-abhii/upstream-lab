@@ -46,7 +46,7 @@ Stack: Python · pytest.
 python reproduce.py  # fresh var/upstream clone required
 ```
 
-See [VERIFICATION.md](VERIFICATION.md) for actual executed checks, setup verification, model/data results and any outstanding environment limitations. A workflow file alone is not evidence that CI passed.
+See [VERIFICATION.md](VERIFICATION.md) for actual executed checks, setup verification, model/data results and any outstanding environment limitations. The [recorded CI runs](reports/ci-verification.json) passed for the linked source revision.
 
 ## Data and attribution
 

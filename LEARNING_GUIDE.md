@@ -23,11 +23,15 @@ Follow the README installation block, then: Install requirements and run python 
 
 ## Five interview questions
 
-1. **What problem does this project solve, and what is its unit of work?** Explain reproduce and improve an open-source behavior, identify open-source reviewers as the audience, and trace one concrete example through the files above. Use the demonstration output rather than hypothetical impact.
-2. **Why did you choose the first design decision?** Pin the upstream commit so the before/after comparison remains reproducible. Show the corresponding implementation and a test that would fail if that property were removed.
-3. **How do you protect correctness when inputs or execution change?** Validate regex syntax at the CLI boundary while returning the original valid pattern string. Explain the relevant invalid-input or edge-case test and distinguish a checked property from an untested assumption.
-4. **How do you make results inspectable and reproducible?** Keep the patch separate from upstream source and preserve license and author attribution. Point to actual outputs and recorded commands. Explain why a successful example is weaker evidence than a tested boundary or independently reconciled total.
-5. **What would you improve before real deployment or real-data use?** Patch is prepared, not submitted or accepted. Tested on Python 3.12/macOS with the default text-unidecode backend; the full interpreter/backend release matrix was not run. No change to the frozen legacy slug algorithm. Choose one limitation, describe the missing evidence, and propose a measurable acceptance check rather than promising production readiness.
+1. **What is the upstream defect?** A malformed custom regular expression passed to python-slugify’s CLI raised an uncaught traceback. The patch converts that invalid argument into an argparse usage error and exit code 2.
+
+2. **How do you know the patch fixes a real issue?** The reproduction clones a pinned upstream revision and records failing malformed-regex cases before applying the patch. The same ten regression cases pass afterward.
+
+3. **Why pin the upstream commit?** Upstream can change. Pinning makes the before/after comparison reproducible and prevents a future upstream fix from being mistaken for the effect of this patch.
+
+4. **How is compatibility checked?** The focused regressions include valid expressions and Unicode-related inputs, and the upstream suite passed 125 tests with one skip. Full upstream release tooling was not claimed as executed.
+
+5. **Was the contribution accepted?** No upstream submission or acceptance is claimed. This repository contains the patch, reproducer, attribution and a draft contribution write-up ready for human review.
 
 ## Independent exercise
 
@@ -41,6 +45,6 @@ The implementation was developed with substantial AI assistance under Abhijith V
 
 Suggested factual bullet after personally validating the demo:
 
-- Implemented and validated reproduce and improve an open-source behavior using Python · pytest, with pinned upstream and documented correctness checks and limitations.
+- Prepared a reproducible python-slugify CLI validation patch with ten passing regression cases and a 125-pass upstream suite; contribution remains unsubmitted.
 
 Use [VERIFICATION.md](VERIFICATION.md) to add only measured numbers. Do not claim production traffic, users, savings, upstream acceptance or cloud deployment without corresponding evidence.
